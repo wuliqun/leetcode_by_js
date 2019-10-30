@@ -14,7 +14,7 @@
  * @param {number[]} rollMax
  * @return {number}
  * 
- * 不會
+ * 
  */
 let dieSimulator = function(n, rollMax) {
   // TODO: url: https://leetcode-cn.com/problems/dice-roll-simulation/

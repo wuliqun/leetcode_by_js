@@ -43,15 +43,35 @@ let isMatch = function (s, p) {
 /**
  * 动态规划
  *    dp[i][j] 代表 s的前i个能否同p的前j个匹配
+ * 
+ * 97.76% 31.46%
  */
 
-isMatch = function(s,p){
-  let len1 = s.length,len2 = p.length,i,j;
+isMatch = function (s, p) {
+  let len1 = s.length,
+    len2 = p.length,
+    i, j;
   let dp = new Array(len1 + 1);
-  for(i=0;i<=len1;i++){
+  for (i = 0; i <= len1; i++) {
     dp[i] = new Array(len2 + 1).fill(false);
   }
   dp[0][0] = true;
-  
+  for (i = 2; i <= len2; i += 2) {
+    dp[0][i] = dp[0][i - 2] && (p[i - 2] !== '*' && p[i - 1] === '*');
+  }
+  for (i = 1; i <= len1; i++) {
+    for (j = 1; j <= len2; j++) {
+      if (s[i - 1] === p[j - 1] || p[j - 1] === '.') {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else if (p[j - 1] === '*' && j > 1) {
+        // * 无用 或者 x* 无用
+        dp[i][j] = dp[i][j - 2] || dp[i][j - 1];
+        if (p[j - 2] === '.' || p[j - 2] === s[i - 1]) {
+          // 与前一个匹配
+          dp[i][j] = dp[i - 1][j] || dp[i][j] || dp[i - 1][j - 1] /* ?? */ ;
+        }
+      }
+    }
+  }
   return dp[len1][len2];
-}
+};
