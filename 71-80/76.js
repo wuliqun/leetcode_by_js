@@ -43,7 +43,12 @@ function match(s,map,len1,len){
   return count === len;
 }
 /**
- * 64.36% 60.00%
+ * 滑动窗口法(双指针):
+ *    起始位置,left,right都指向0位,
+ *    right向右移动,直至能覆盖子串,记录结果
+ *    left向右移动,直至不能覆盖
+ *    若仍能覆盖,更新结果,若不能覆盖,right再往右移动,直至能覆盖
+ * 100.00% 70.00%
  */
 minWindow = function(s,t){
   let len1 = s.length,len2 = t.length,i,count = 0;
@@ -53,28 +58,23 @@ minWindow = function(s,t){
   for(i=0;i<len2;i++){
     map[t[i]] = (map[t[i]] || 0) + 1;
   }
-  i = 0;
-  while((!(s[i] in map)) && i < len1){
-    i++;
-  }
-  if(i === len1) return res;
-  j = i;
-  map[s[i]] --;
-  count ++;
-  while(true){
+  i = j = 0;
+  while(j <= len1){
     if(count < len2){
-      j ++;
-      if(j === len1) break;
+      // 不能匹配,right右移
       if(s[j] in map){
         if(map[s[j]] > 0){
           count ++;
         }
         map[s[j]] --;
       }
+      j ++;
     }else{
-      if(!res || res.length > j - i + 1){
-        res = s.slice(i,j+1);
+      // 当前能匹配,与结果比较
+      if(!res || res.length > j - i){
+        res = s.slice(i,j);
       }
+      // left右移
       if(s[i] in map){
         if(map[s[i]] === 0){
           count --;
@@ -87,4 +87,4 @@ minWindow = function(s,t){
   return res;
 }
 
-console.log(minWindow("a","b"))
+console.log(minWindow("ab","ba"))
