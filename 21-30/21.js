@@ -43,3 +43,8 @@ let mergeTwoLists = function(l1, l2) {
   }
   return head;
 };
+
+// test
+let test = require('../linkListTest');
+let res = test(mergeTwoLists,[[1,3,5,8,9,44],[1,2,3,4,5,6,7,33]])
+console.log(res);
