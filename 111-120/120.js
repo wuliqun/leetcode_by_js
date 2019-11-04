@@ -9,6 +9,7 @@
  */
 let minimumTotal = function (triangle) {
   let len = triangle.length, i, j;
+  if(!len) return 0;
   let minPath = triangle[len - 1].slice();
   for (i = len - 2; i >= 0; i--) {
     for (j = 0; j <= i; j++) {
