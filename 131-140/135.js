@@ -10,7 +10,36 @@
 /**
  * @param {number[]} ratings
  * @return {number}
+ * 从数组选出当前最小的 放最少数量
  */
 let candy = function(ratings) {
-    
+  let len = ratings.length,i;
+  let res = new Array(len).fill(0);
+  let map = {};
+  let min = Infinity,minIndex,count = 0;
+  while(count < len){
+    for(i = 0;i<len;i++){
+      if(map[i]) continue;
+      if(ratings[i] < min){
+        min = ratings[i];
+        minIndex = i;
+      }
+    }
+    map[minIndex] = true;
+    if(ratings[minIndex] === ratings[minIndex-1] && ratings[minIndex] === ratings[minIndex+1]){
+      res[minIndex] = 1;
+    }else if(ratings[minIndex] === ratings[minIndex-1]){
+      res[minIndex] = (res[minIndex+1] || 0) + 1;
+    }else if(ratings[minIndex] === ratings[minIndex+1]){
+      res[minIndex] = (res[minIndex-1] || 0) + 1;
+    }else{
+      res[minIndex] = Math.max(res[minIndex-1] || 0,res[minIndex+1] || 0) + 1;
+    }
+    min = Infinity;
+    count ++;
+  }
+  return res.reduce((a,b)=>a+b,0);
 };
+
+console.log(candy([]))
+console.log(candy([1,2,2,2,2,2]))
