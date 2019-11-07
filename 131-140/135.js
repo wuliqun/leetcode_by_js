@@ -10,7 +10,8 @@
 /**
  * @param {number[]} ratings
  * @return {number}
- * 从数组选出当前最小的 放最少数量
+ * 每次从数组选出当前最小的 放最少数量
+ * 超时
  */
 let candy = function(ratings) {
   let len = ratings.length,i;
@@ -40,6 +41,69 @@ let candy = function(ratings) {
   }
   return res.reduce((a,b)=>a+b,0);
 };
+/**
+ * 分为上升和下降各个阶段
+ * 设为count个  糖果数量为count*(count+1)/2
+ * 100.00% 75.86%
+ */
+candy = function(ratings){
+  let len = ratings.length;
+  if(len <= 1) return len;
+  let i,j,arr = [],more = 0,added = false;
+  for(i = 0;i<len;i++){
+    // 走到这里肯定最后一位是和前面走势相反
+    if(i === len - 1){
+      if(ratings[i] > ratings[i-1]){
+        more ++;
+      }
+      arr.push(1);
+    }else{
+      if(ratings[i] === ratings[i+1]){
+        if(i !== 0 && ratings[i] > ratings[i-1]){
+          more ++;
+        }
+        arr.push(1);
+        added = false;
+      }else if(ratings[i] < ratings[i+1]){
+        for(j = i+1;j<len-1;j++){
+          if(ratings[j] >= ratings[j+1]) break;
+        }
+        arr.push(j-i+1);
+        // 前面递减,现在递增,但现在的开头,比前面大,所以这一轮要以2开头
+        if(i !== 0 && ratings[i] > ratings[i-1]){
+          more += j - i + 1;
+          // 记录,当前比预计结尾增加了1
+          added = true;
+        }else{
+          added = false;
+        }
+        i = j;
+      }else{
+        for(j = i+1;j<len-1;j++){
+          if(ratings[j] <= ratings[j+1]) break;
+        }
+        // 前面递减,现在递增,但如果递减的比递增的长,
+        // 会导致此轮的首位比上一轮的末位要大,
+        // 所以上一轮的末位要增加,但有可能上一轮末位已经增加了1
+        // 所以加上added判断
+        if(ratings[i] < ratings[i-1] && j-i+1 >= arr[arr.length - 1]){
+          more += j-i+1 - arr[arr.length - 1] + (added ? 0 : 1);
+        }
+        added = false;
+        arr.push(j-i+1);
+        i = j;
+      }
+    }    
+  }
+  return arr.reduce((last,i)=>{
+    return last + i*(i+1)/2;
+  },more);
+}
 
-console.log(candy([]))
-console.log(candy([1,2,2,2,2,2]))
+/**
+ * 上面的解法要考虑的情况太多,
+ * 应该还有更简单的解法
+ * TODO:
+ */
+let arr = require('./arr.js')
+console.log(candy(arr));
