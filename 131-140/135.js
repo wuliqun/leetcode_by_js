@@ -99,11 +99,5 @@ candy = function(ratings){
     return last + i*(i+1)/2;
   },more);
 }
-
-/**
- * 上面的解法要考虑的情况太多,
- * 应该还有更简单的解法
- * TODO:
- */
 let arr = require('./arr.js')
 console.log(candy(arr));
