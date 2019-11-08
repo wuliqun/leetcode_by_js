@@ -11,7 +11,6 @@
  * @param {string[]} wordList
  * @return {string[][]}
  * 50% 90%
- * TODO: 优化
  */
 let findLadders = function (beginWord, endWord, wordList) {
   let ladders = [

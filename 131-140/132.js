@@ -12,8 +12,7 @@
  * 动态规划
  *    palidome[i] 表示以i为终点,所有可以组成回文的起点,不包括自身
  *    dp[i]  表示i 最少要多少次切割
- * 31.25% 57.14% 
- * TODO: 优化
+ * 
  */
 let minCut = function (s) {
   let len = s.length,i,j;
