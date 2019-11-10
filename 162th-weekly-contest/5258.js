@@ -19,10 +19,11 @@
  */
 let maxScoreWords = function(words, letters, score) {
   // 'a'.charCodeAt(0) --> 97
-  // 用letters 组成words 可以有哪些情况
+  // 用letters 组成words 的所有可能情况
   let res = [];
   backtrack(words,letters,0,res,[]);
   let max = 0,i,cached = {};
+  // 遍历所有情况 获取得分最高的
   for(i=0;i<res.length;i++){
     max = Math.max(max,getScore(res[i],score,cached));
   }
