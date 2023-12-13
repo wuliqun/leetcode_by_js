@@ -5,7 +5,7 @@
  *  
  */
 
- /**
+/**
   * 动态规划
   *     dp[i][j] 表示 i*j 最少需要多少块
   * @param {*} m 
@@ -44,6 +44,6 @@ let tilingRectangle = function (m, n) {
     }
   }
   return dp[m][n];
-}
+};
 
-console.log(tilingRectangle(13, 11))
+console.log(tilingRectangle(13, 11));

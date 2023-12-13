@@ -15,27 +15,27 @@
  */
 let maxLength = function (arr) {
   let res = [];
-  backtrace(arr,'',0,res);
-  return Math.max.apply(null,res);      
+  backtrace(arr, '', 0, res);
+  return Math.max.apply(null, res);      
 };
-function backtrace(arr,s,index,res){
+function backtrace(arr, s, index, res){
   if(index === arr.length){
     res.push(s.length);
     return;
   }
-  backtrace(arr,s,index +1,res);
-  if(canBeChoose(s,arr[index])){
-    backtrace(arr,s+arr[index],index+1,res);
+  backtrace(arr, s, index + 1, res);
+  if(canBeChoose(s, arr[index])){
+    backtrace(arr, s + arr[index], index + 1, res);
   }
 }
-function canBeChoose(s,s2){
-  let len = s2.length,i;
+function canBeChoose(s, s2){
+  let len = s2.length, i;
   // s2自身是否包含重复字母
-  for(i=len-1;i>=0;i--){
+  for(i = len - 1;i >= 0;i--){
     if(s2.indexOf(s2[i]) !== i) return false;
   }
   // s2是否包含s中已有字母
-  for(i=0;i<len;i++){
+  for(i = 0;i < len;i++){
     if(s.indexOf(s2[i]) !== -1) return false;
   }
   return true;

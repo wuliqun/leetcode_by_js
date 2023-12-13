@@ -12,12 +12,12 @@
  */
 let findSolution = function (customfunction, z) {
   let res = [];
-  let x,y,tmp;
-  for(x = 1;x<=1000;x++){
-    for(y=1;y<=1000;y++){
-      tmp = customfunction.f(x,y);
+  let x, y, tmp;
+  for(x = 1;x <= 1000;x++){
+    for(y = 1;y <= 1000;y++){
+      tmp = customfunction.f(x, y);
       if(tmp === z){
-        res.push([x,y]);
+        res.push([x, y]);
         break;
       }else if(tmp > z){
         break;
